@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import winsound
 from src import Bigbang
 
-test = Bigbang.test(1)
+test = Bigbang.big_bang(2,2,3,4,5)
 
 
 
