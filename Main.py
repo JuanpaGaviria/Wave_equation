@@ -12,12 +12,15 @@ from src.battery_construction import battery_structure
 4,5,7,8,9: others (check csv)
 10, 11: benzene electrolyte, carbon tetrachloride electrolyte 
 """
-indexes = [1, 2, 3]  # materials definition
-fold_number = 6  # Layers conformed by the materials defined
+indexes = [1, 2]  # materials definition
+fold_number = 0  # Layers conformed by the materials defined
 url = './src/database/materials_properties.csv'
 df = pd.read_csv(url)
 
+battery_interfaces, battery_layer, battery_map = battery_structure(indexes, fold_number)
 
-print("hola Michael")
+
+
+
 
 
