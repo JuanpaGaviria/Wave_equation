@@ -14,10 +14,13 @@ from src.battery_construction import battery_structure
 """
 indexes = [1, 2]  # materials definition
 fold_number = 0  # Layers conformed by the materials defined
+
+nodes, time, n_steps = 100, 1, 6000
+
 url = './src/database/materials_properties.csv'
 df = pd.read_csv(url)
 
-battery_interfaces, battery_layer, battery_map = battery_structure(indexes, fold_number)
+battery_interfaces, battery_layers, battery_map = battery_structure(indexes, fold_number)
 
 
 
