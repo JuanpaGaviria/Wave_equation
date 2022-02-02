@@ -24,5 +24,6 @@ def battery_structure(indexes, fold_number):  # method to construct the battery 
                 if count < 0:
                     count = len(indexes)-1
             break
+    print("check: battery map has been constructed", battery_structure_map)
     return interface_number, layer_number, battery_structure_map  # if another variable is added at this line, the main
 # must read it.

@@ -11,7 +11,7 @@ class Material:
         if self.state == 'liquid':
             self.square_velocity = self.bulk_modulus/self.density
         else:
-            self.square_velocity = self.e_modulus/self
-        print("check: the material number", self.type, " has been instantiated")
+            self.square_velocity = self.e_modulus/self.density
+
 
 
