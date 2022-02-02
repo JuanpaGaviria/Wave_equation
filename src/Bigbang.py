@@ -10,13 +10,13 @@ def big_bang(indexes, df, nodes, battery_map):
     materials_number = int(len(indexes))  # Amount of different materials present in the test
     materials_thickness = []  # thickness
     material_dimensionless_length = []  # dimensional thickness
+    interphase_position = []
 
     # Obtaining the materials type
     for i in range(materials_number):
         idx = indexes[i]  # takes index i
         _type = df._get_value(idx, "Type")  # From de data frame (df) takes the str Type at the index i
         materials.append(_type)  # Add the str Type in the list materials
-    print("check: Got each materials type")
 
     # Obtaining the materials attributes
     df = df.set_index('Type')  # Type column is set as the index of the data frame
@@ -33,16 +33,13 @@ def big_bang(indexes, df, nodes, battery_map):
         materials_summary.append(material)  # stores each material in a list
         materials_thickness.append(material.thickness)  # stores each material thickness in a list
 
-    print(materials_thickness)
     # Length definition
     length = 0
     _dict = dict(zip(indexes, materials_thickness))  # creates a dictionary
-    print("check: dictionary created", _dict)
     for _length in range(len(battery_map)):  # computes the total length
         _id = battery_map[_length]
         thick = _dict[_id]
         length = length + thick
-    print("check: length has been computed:", length)
 
     # dimensionless length definition
     for _dimensionless_length in range(len(battery_map)):  # computes the dimensionless thickness
@@ -51,14 +48,20 @@ def big_bang(indexes, df, nodes, battery_map):
         dimensionless_thickness = round(dimensionless_thickness, 2)  # rounds the value (this has to be tested when\
         # generating the nodes
         material_dimensionless_length.append(dimensionless_thickness)  # save each dimensionless thickness in a list
+
+    # definition of the interphase positions
+    positions = 0
+    for i in range(len(material_dimensionless_length)):
+        positions = positions + material_dimensionless_length[i]
+        interphase_position.append(positions)
+
     dimensionless_length = 0
     for j in range(len(material_dimensionless_length)):  # checking total dimensionless length = 1
         dimensionless_length = dimensionless_length + material_dimensionless_length[j]
-    print("check: dimensionless length has been computed:", dimensionless_length)
     if dimensionless_length != 1:
         print("WARM: dimensionless length has a problem", dimensionless_length)
     dx = dimensionless_length/(nodes-1)
     x = np.linspace(0, dimensionless_length, nodes)
-
+    print("Bigbang has been successfully executed")
     return materials, materials_summary, materials_number, materials_thickness, material_dimensionless_length, length,\
-        dx, x
+        dx, x, interphase_position
