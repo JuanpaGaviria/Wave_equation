@@ -18,7 +18,7 @@ fold_number = 2  # Layers conformed by the materials defined
 
 nodes, time, n_steps = 100, 1, 6000
 dt = time/n_steps
-initial_velocity, amplitude, period = 0, 1, 1
+initial_velocity, amplitude, period, input_time = 0, 1, 1, 2
 
 url = './src/database/materials_properties.csv'
 df = pd.read_csv(url)
@@ -28,7 +28,7 @@ materials, materials_summary, materials_number, materials_thickness, material_di
         dx, x, interphase_position = Bigbang.big_bang(indexes, df, nodes, battery_map)
 
 H = fdm_implicit(materials_summary, interphase_position, material_dimensionless_length, nodes, dx, x, time, n_steps, dt,
-                 initial_velocity, amplitude, period)
+                 initial_velocity, amplitude, period, input_time)
 
 
 
