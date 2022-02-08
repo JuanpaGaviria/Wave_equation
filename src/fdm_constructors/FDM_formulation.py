@@ -44,7 +44,7 @@ class ImplicitFormulation(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def internal_node(self, phi, uj_0, uj_1, u_left):
+    def internal_node(self, phi, uj_0, uj_1):
         pass
 
     @abstractmethod
@@ -95,46 +95,96 @@ class InputWave(ImplicitFormulation):
         self.b = uj_0 + initial_velocity*dt - phi*u_left
 
     def time_0_internal_node(self, phi, initial_velocity, dt, uj_0):
-        pass
+        self.a_i_i_2 = phi
+        self.a_i_i_1 = -16 * phi
+        self.a_i_i = 1 + (30 * phi)
+        self.a_i_i1 = -16 * phi
+        self.a_i_i2 = phi
+        self.b = uj_0 + initial_velocity * dt
 
     def time_0_node__1_interphase(self, gamma, initial_velocity, dt, uj_0):
-        pass
+        self.a_i_i_1 = - gamma
+        self.a_i_i = 1 + (2*gamma)
+        self.a_i_i1 = - gamma
+        self.b = uj_0 + (initial_velocity * dt)
 
     def time_0_interphase(self, alpha):
-        pass
+        self.a_i_i_2 = 1
+        self.a_i_i_1 = - 4
+        self.a_i_i = 3 * (1 + alpha)
+        self.a_i_i1 = - 4 * alpha
+        self.a_i_i2 = alpha
+        self.b = 0
 
     def time_0_node_1_interphase(self, gamma, initial_velocity, dt, uj_0):
-        pass
+        self.a_i_i_1 = - gamma
+        self.a_i_i = 1 + (2 * gamma)
+        self.a_i_i1 = - gamma
+        self.b = uj_0 + (initial_velocity * dt)
 
     def time_0_penultimate_node(self, phi, initial_velocity, dt, u_right, uj_0):
-        pass
+        self.a_i_i_2 = phi
+        self.a_i_i_1 = - 16 * phi
+        self.a_i_i = 1 + (30 * phi)
+        self.a_i_i1 = - 16 * phi
+        self.b = uj_0 + (initial_velocity * dt) - (phi * u_right)
 
     def time_0_last_node(self, gamma, initial_velocity, dt, u_right, uj_0):
-        pass
+        self.a_i_i_1 = - gamma
+        self.a_i_i = 1 + (2 * gamma)
+        self.b = uj_0 + (initial_velocity * dt) + (gamma * u_right)
 
     def node_0(self, gamma, uj_0, uj_1, u_left):
-        pass
+        self.a_i_i = 1 + (2 * gamma)
+        self.a_i_i1 = - gamma
+        self.b = (2 * uj_0) - uj_1 + (gamma * u_left)
 
     def node_1(self, phi, uj_0, uj_1, u_left):
-        pass
+        self.a_i_i_1 = - 16 * phi
+        self.a_i_i = 1 + (30 * phi)
+        self.a_i_i1 = -16 * phi
+        self.a_i_i2 = phi
+        self.b = (2 * uj_0) - uj_1 - (phi * u_left)
 
-    def internal_node(self, phi, uj_0, uj_1, u_left):
-        pass
+    def internal_node(self, phi, uj_0, uj_1):
+        self.a_i_i_2 = phi
+        self.a_i_i_1 = -16 * phi
+        self.a_i_i = 1 + (30 * phi)
+        self.a_i_i1 = -16 * phi
+        self.a_i_i2 = phi
+        self.b = 2 * uj_0 - uj_1
 
     def node__1_interphase(self,  gamma, uj_0, uj_1):
-        pass
+        self.a_i_i_1 = - gamma
+        self.a_i_i = 1 + (2 * gamma)
+        self.a_i_i1 = - gamma
+        self.b = 2 * uj_0 - uj_1
 
     def interphase(self, alpha):
-        pass
+        self.a_i_i_2 = 1
+        self.a_i_i_1 = - 4
+        self.a_i_i = 3 * (1 + alpha)
+        self.a_i_i1 = - 4 * alpha
+        self.a_i_i2 = alpha
+        self.b = 0
 
     def node_1_interphase(self, gamma, uj_0, uj_1):
-        pass
+        self.a_i_i_1 = - gamma
+        self.a_i_i = 1 + (2 * gamma)
+        self.a_i_i1 = - gamma
+        self.b = 2 * uj_0 - uj_1
 
     def penultimate_node(self, phi, uj_0, uj_1, u_right):
-        pass
+        self.a_i_i_2 = phi
+        self.a_i_i_1 = - 16 * phi
+        self.a_i_i = 1 + (30 * phi)
+        self.a_i_i1 = - 16 * phi
+        self.b = 2 * uj_0 - uj_1 - (phi * u_right)
 
     def last_node(self, gamma, uj_0, uj_1, u_right):
-        pass
+        self.a_i_i_1 = - gamma
+        self.a_i_i = 1 + (2 * gamma)
+        self.b = 2 * uj_0 - uj_1 + (gamma * u_right)
 
 
 class StandingWave(ImplicitFormulation):
