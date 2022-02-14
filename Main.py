@@ -13,7 +13,7 @@ from src.FDM_implicit import fdm_implicit
 4,5,7,8,9: others (check csv)
 10, 11: benzene electrolyte, carbon tetrachloride electrolyte 
 """
-indexes = [0, 1, 3, 5, 6]  # materials definition
+indexes = [1, 2, 3]  # materials definition
 fold_number = 2  # Layers conformed by the materials defined
 
 nodes, time, n_steps = 100, 0.001, 6000

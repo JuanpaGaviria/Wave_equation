@@ -242,7 +242,7 @@ def fdm_implicit(materials_summary, interphase_position, nodes, dx, x, time, n_s
             uj_1 = uj0
             uj0 = uj1
 
-    for i in range(0, n_steps + 1, 30):
+    for i in range(0, n_steps + 1, 20):
         plt.cla()  # borra pantalla anterior del plot
         plt.xlim(0, 1.)
         plt.ylim(-2, 2.)
