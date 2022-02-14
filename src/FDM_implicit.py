@@ -1,8 +1,7 @@
 import numpy as np
 from .fdm_constructors import input_f
-from .fdm_constructors import ImplicitFormulation
-from .fdm_constructors import StandingWave
-from .fdm_constructors import InputWave
+from .fdm_constructors import StandingWave  # Standing wave
+from .fdm_constructors import InputWave  # Traveling wave
 import matplotlib.pyplot as plt
 
 
@@ -24,11 +23,13 @@ def fdm_implicit(materials_summary, interphase_position, nodes, dx, x, time, n_s
     print(len(interphase_node), interphase_node)
     print(len(interphase_position), interphase_position)
 
+    _y = input_f(np.arange(0, 9.8e-06, 1e-7), dt)
+
     for j in range(0, n_steps):  # Implicit Finite Difference Method implementation
-        formulation = InputWave()
+        formulation = InputWave()  # Wave that get into the domain
         u_right = 0
         if j == 0:
-            u_left = 0
+            u_left = _y[j]
             interphase_count = 0
             for node_count in range(0, nodes):
                 if interphase_node[interphase_count] != interphase_node[-1]:  # Perform at all but the last material
@@ -134,8 +135,8 @@ def fdm_implicit(materials_summary, interphase_position, nodes, dx, x, time, n_s
             uj0 = uj1
 
         if j > 0:
-            if (j > 0) and (j < 100):
-                u_left = amplitude * np.cos(-(2 * np.pi * j * dt / period))
+            if j < len(_y):
+                u_left = _y[j]
             else:
                 u_left = 0
             interphase_count = 0
@@ -245,7 +246,7 @@ def fdm_implicit(materials_summary, interphase_position, nodes, dx, x, time, n_s
     for i in range(0, n_steps + 1, 20):
         plt.cla()  # borra pantalla anterior del plot
         plt.xlim(0, 1.)
-        plt.ylim(-2, 2.)
+#        plt.ylim(-1e-4, 1e-4)
         plt.plot(x, h[:, i], color='r')
         plt.grid()
         plt.pause(0.00000000000000001)

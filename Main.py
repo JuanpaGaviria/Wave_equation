@@ -17,7 +17,7 @@ indexes = [1, 2, 3]  # materials definition
 fold_number = 2  # Layers conformed by the materials defined
 
 nodes, time, n_steps = 100, 0.001, 6000
-dt = 6.25e-7
+dt = 1e-7/4
 initial_velocity, amplitude, period, input_time = 0, 2, 2, 0.1
 
 url = './src/database/materials_properties.csv'
@@ -30,4 +30,3 @@ materials, materials_summary, materials_number, materials_thickness, material_di
 H = fdm_implicit(materials_summary, interphase_position, nodes, dx, x, time, n_steps, dt,
                  initial_velocity, amplitude, period, input_time, battery_map, summary_e_modulus, gamma_map,
                  phi_map)
-
