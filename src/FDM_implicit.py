@@ -23,7 +23,7 @@ def fdm_implicit(materials_summary, interphase_position, nodes, dx, x, time, n_s
     print(len(interphase_node), interphase_node)
     print(len(interphase_position), interphase_position)
 
-    _y = input_f(np.arange(0, 9.8e-06, 1e-7), dt)
+    _y = input_f(np.arange(0, 9.4e-07, dt), dt)
 
     for j in range(0, n_steps):  # Implicit Finite Difference Method implementation
         formulation = InputWave()  # Wave that get into the domain
@@ -128,7 +128,9 @@ def fdm_implicit(materials_summary, interphase_position, nodes, dx, x, time, n_s
                         a[node_count, node_count] = formulation.a_i_i
                         b[node_count] = formulation.b
 
-            uj1 = np.linalg.solve(a, b)
+            #  uj1 = np.linalg.solve(a, b)
+            a_inverse = np.linalg.pinv(a)
+            uj1 = np.dot(a_inverse, b)
             uj1t = np.hstack([u_left, uj1, u_right])
             h[:, j+1] = uj1t[:]
             uj_1 = uj0
@@ -237,7 +239,9 @@ def fdm_implicit(materials_summary, interphase_position, nodes, dx, x, time, n_s
                         a[node_count, node_count] = formulation.a_i_i
                         b[node_count] = formulation.b
 
-            uj1 = np.linalg.solve(a, b)
+            #  uj1 = np.linalg.solve(a, b)
+            a_inverse = np.linalg.pinv(a)
+            uj1 = np.dot(a_inverse, b)
             uj1t = np.hstack([u_left, uj1, u_right])
             h[:, j + 1] = uj1t[:]
             uj_1 = uj0

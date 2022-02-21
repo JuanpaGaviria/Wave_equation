@@ -14,10 +14,11 @@ from src.FDM_implicit import fdm_implicit
 10, 11: benzene electrolyte, carbon tetrachloride electrolyte 
 """
 indexes = [1, 2, 3]  # materials definition
-fold_number = 2  # Layers conformed by the materials defined
+fold_number = 3  # Layers conformed by the materials defined
 
-nodes, time, n_steps = 100, 0.001, 6000
+nodes, n_steps = 250, 6000
 dt = 1e-7/4
+time = n_steps * dt
 initial_velocity, amplitude, period, input_time = 0, 2, 2, 0.1
 
 url = './src/database/materials_properties.csv'
