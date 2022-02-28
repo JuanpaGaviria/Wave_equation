@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-import winsound
+
 from src import Bigbang
 from src.battery_construction import battery_structure
 from src.FDM_implicit import fdm_implicit
@@ -14,10 +14,10 @@ from src.FDM_implicit import fdm_implicit
 10, 11: benzene electrolyte, carbon tetrachloride electrolyte 
 """
 indexes = [1, 2, 3]  # materials definition
-fold_number = 3  # Layers conformed by the materials defined
+fold_number = 2  # Layers conformed by the materials defined
 
-nodes, n_steps = 250, 6000
-dt = 1e-7/4
+nodes, n_steps = 100, 10000
+dt = 1e-7/6
 time = n_steps * dt
 initial_velocity, amplitude, period, input_time = 0, 2, 2, 0.1
 
@@ -31,3 +31,5 @@ materials, materials_summary, materials_number, materials_thickness, material_di
 H = fdm_implicit(materials_summary, interphase_position, nodes, dx, x, time, n_steps, dt,
                  initial_velocity, amplitude, period, input_time, battery_map, summary_e_modulus, gamma_map,
                  phi_map)
+
+

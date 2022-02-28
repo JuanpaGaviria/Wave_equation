@@ -232,7 +232,7 @@ class StandingWave(ImplicitFormulation):
     def node_1(self, phi, uj0, uj_1, u_left):
         pass
 
-    def internal_node(self, phi, uj0, uj_1, u_left):
+    def internal_node(self, phi, uj0, uj_1):
         pass
 
     def node__1_interphase(self,  gamma, uj0, uj_1):

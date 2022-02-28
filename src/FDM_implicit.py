@@ -2,7 +2,9 @@ import numpy as np
 from .fdm_constructors import input_f
 from .fdm_constructors import StandingWave  # Standing wave
 from .fdm_constructors import InputWave  # Traveling wave
+from .fdm_constructors import BCs  # Boundary conditions
 import matplotlib.pyplot as plt
+import winsound
 
 
 def fdm_implicit(materials_summary, interphase_position, nodes, dx, x, time, n_steps, dt, initial_velocity, amplitude,
@@ -27,6 +29,7 @@ def fdm_implicit(materials_summary, interphase_position, nodes, dx, x, time, n_s
 
     for j in range(0, n_steps):  # Implicit Finite Difference Method implementation
         formulation = InputWave()  # Wave that get into the domain
+        bc = BCs()
         u_right = 0
         if j == 0:
             u_left = _y[j]
@@ -139,8 +142,11 @@ def fdm_implicit(materials_summary, interphase_position, nodes, dx, x, time, n_s
         if j > 0:
             if j < len(_y):
                 u_left = _y[j]
-            else:
+            elif (j > len(_y)) and (j < (len(_y) + 2000)):
                 u_left = 0
+            else:
+                bc.left_soft_bc(uj0[0], uj0[1])
+                u_left = bc.u_left_value
             interphase_count = 0
             for node_count in range(0, nodes):
                 if interphase_node[interphase_count] != interphase_node[-1]:
@@ -247,10 +253,13 @@ def fdm_implicit(materials_summary, interphase_position, nodes, dx, x, time, n_s
             uj_1 = uj0
             uj0 = uj1
 
-    for i in range(0, n_steps + 1, 20):
+    duration = 1000  # milliseconds
+    freq = 380  # Hz
+    winsound.Beep(freq, duration)
+    for i in range(0, n_steps + 1, 30):
         plt.cla()  # borra pantalla anterior del plot
         plt.xlim(0, 1.)
-#        plt.ylim(-1e-4, 1e-4)
+        plt.ylim(-1e-7, 1e-7)
         plt.plot(x, h[:, i], color='r')
         plt.grid()
         plt.pause(0.00000000000000001)
