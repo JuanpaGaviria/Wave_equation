@@ -26,6 +26,7 @@ def fdm_implicit(materials_summary, interphase_position, nodes, dx, x, time, n_s
     print(len(interphase_position), interphase_position)
 
     _y = input_f(np.arange(0, 9.4e-07, dt), dt)
+    print("input:", _y.shape)
 
     for j in range(0, n_steps):  # Implicit Finite Difference Method implementation
         formulation = InputWave()  # Wave that get into the domain
@@ -142,7 +143,7 @@ def fdm_implicit(materials_summary, interphase_position, nodes, dx, x, time, n_s
         if j > 0:
             if j < len(_y):
                 u_left = _y[j]
-            elif (j > len(_y)) and (j < (len(_y) + 2000)):
+            elif (j > len(_y)) and (j < (len(_y) + 5000)):
                 u_left = 0
             else:
                 bc.left_soft_bc(uj0[0], uj0[1])
@@ -256,12 +257,15 @@ def fdm_implicit(materials_summary, interphase_position, nodes, dx, x, time, n_s
     duration = 1000  # milliseconds
     freq = 380  # Hz
     winsound.Beep(freq, duration)
-    for i in range(0, n_steps + 1, 30):
-        plt.cla()  # borra pantalla anterior del plot
-        plt.xlim(0, 1.)
-        plt.ylim(-1e-7, 1e-7)
-        plt.plot(x, h[:, i], color='r')
-        plt.grid()
-        plt.pause(0.00000000000000001)
+
+#    for i in range(0, n_steps + 1, 15):
+#        plt.cla()  # borra pantalla anterior del plot
+    #        plt.xlim(0, 1.)
+    #    plt.ylim(-0.000001, 0.000001)
+    #   _iteration = i
+    #   plt.plot(x, h[:, i], color='r', label=_iteration)
+    #   plt.legend()
+    #   plt.grid()
+    #   plt.pause(0.00000000000000001)
 
     return h

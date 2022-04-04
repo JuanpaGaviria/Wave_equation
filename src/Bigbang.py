@@ -57,19 +57,18 @@ def big_bang(indexes, df, nodes, battery_map, dt):
     for _dimensionless_length in range(len(battery_map)):  # computes the dimensionless thickness
         _id = battery_map[_dimensionless_length]
         dimensionless_thickness = _dict[_id] / length
-        dimensionless_thickness = round(dimensionless_thickness, 2)  # rounds the value (this has to be tested when\
-        # generating the nodes
         material_dimensionless_length.append(dimensionless_thickness)  # save each dimensionless thickness in a list
 
     # definition of the interphase positions
     positions = 0
-    for i in range(len(material_dimensionless_length)):
+    for i in range(len(material_dimensionless_length)-1):
         positions = positions + material_dimensionless_length[i]
         interphase_position.append(positions)
 
     dimensionless_length = 0
     for j in range(len(material_dimensionless_length)):  # checking total dimensionless length = 1
         dimensionless_length = dimensionless_length + material_dimensionless_length[j]
+
     dx = dimensionless_length/(nodes-1)
     x = np.linspace(0, dimensionless_length, nodes)
 
