@@ -13,10 +13,10 @@ from src.FDM_implicit import fdm_implicit
 10, 11: benzene electrolyte, carbon tetrachloride electrolyte 
 """
 indexes = [0, 1]  # materials definition
-layer_number = 18
+layer_number = 32 # The condition is that the numbers half must be an even number
 
-nodes, n_steps = 150, 10000
-dt = 1e-7/8
+nodes, n_steps = 400, 20000
+dt = 1e-7
 time = n_steps * dt
 initial_velocity, amplitude, period, input_time = 0, 2, 2, 0.1
 
@@ -24,11 +24,14 @@ url = './src/database/materials_properties.csv'
 df = pd.read_csv(url)
 
 interphase_number, battery_map = battery_structure(indexes, layer_number)
+
 materials, materials_summary, materials_number, materials_thickness, material_dimensionless_length, length,\
         dx, x, interphase_position, summary_e_modulus, gamma_map, phi_map = Bigbang.big_bang(indexes, df, nodes,
                                                                                              battery_map, dt)
+print(interphase_position)
+
 H = fdm_implicit(materials_summary, interphase_position, nodes, dx, x, time, n_steps, dt,
                  initial_velocity, amplitude, period, input_time, battery_map, summary_e_modulus, gamma_map,
                  phi_map)
 
-np.savetxt(f'h_150.csv', H, delimiter=',')
+np.savetxt(f'h_500_dt_1e7.csv', H, delimiter=',')
