@@ -24,6 +24,7 @@ def fdm_implicit(materials_summary, interphase_position, nodes, dx, x, time, n_s
         interphase_node.append(value)
 
     _y = input_f(np.arange(0, 9.4e-07, dt), dt)
+    print(_y.size, _y)
 
     for j in range(0, n_steps):  # Implicit Finite Difference Method implementation
         condition = True  # Used to know when is the last material

@@ -12,7 +12,7 @@ from src.FDM_implicit import fdm_implicit
 4,5,7,8,9: others (check csv)
 10, 11: benzene electrolyte, carbon tetrachloride electrolyte 
 """
-indexes = [0, 1]  # materials definition
+indexes = [2, 3]  # materials definition
 layer_number = 32 # The condition is that the numbers half must be an even number
 
 nodes, n_steps = 400, 20000
@@ -34,4 +34,4 @@ H = fdm_implicit(materials_summary, interphase_position, nodes, dx, x, time, n_s
                  initial_velocity, amplitude, period, input_time, battery_map, summary_e_modulus, gamma_map,
                  phi_map)
 
-np.savetxt(f'h_500_dt_1e7.csv', H, delimiter=',')
+np.savetxt(f'h_400_discharged.csv', H, delimiter=',')
